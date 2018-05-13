@@ -20,11 +20,15 @@ class MaintenanceMode
     /**
      * Turn maintenance mode on.
      *
+     * @param string $message
+     * @param array  $allowedIpAddresses
      * @return bool
      */
-    public function on()
+    public function on($message = '', $allowedIpAddresses = [])
     {
-        return $this->driver->activate($this->getDownPayload());
+        $payload = $this->getDownPayload($message, $allowedIpAddresses);
+
+        return $this->driver->activate($payload);
     }
 
     /**
@@ -48,17 +52,29 @@ class MaintenanceMode
     }
 
     /**
+     * If maintenance mode is on, get the information provided when it was activated.
+     *
+     *
+     */
+    public function getDownInformation()
+    {
+
+    }
+
+    /**
      * Get the payload to be placed in the "down" file.
      *
+     * @param string $message
+     * @param array  $allowedIpAddresses
      * @return array
      */
-    protected function getDownPayload()
+    protected function getDownPayload($message = '', $allowedIpAddresses = [])
     {
         return [
-            'time'  => Carbon::now()->getTimestamp(),
-            //            'message' => $this->option('message'),
-            'retry' => static::getRetryTime(),
-            //            'allowed' => $this->option('allow'),
+            'time'    => Carbon::now()->getTimestamp(),
+            'message' => $message,
+            'retry'   => static::getRetryTime(),
+            'allowed' => $allowedIpAddresses,
         ];
     }
 
