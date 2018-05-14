@@ -8,15 +8,17 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
+use Konsulting\Laravel\MaintenanceMode\DownPayload;
+
 interface DriverInterface
 {
     /**
      * Activate maintenance mode.
      *
-     * @param array $payload
+     * @param DownPayload $payload
      * @return bool
      */
-    public function activate($payload);
+    public function activate(DownPayload $payload);
 
     /**
      * Deactivate maintenance mode.
@@ -31,4 +33,11 @@ interface DriverInterface
      * @return bool
      */
     public function isActive();
+
+    /**
+     * Get the information specified when the site was taken down.
+     *
+     * @return DownPayload
+     */
+    public function downInformation();
 }

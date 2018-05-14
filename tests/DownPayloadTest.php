@@ -3,38 +3,38 @@
 namespace Konsulting\Laravel\MaintenanceMode\Tests;
 
 use Illuminate\Support\Carbon;
-use Konsulting\Laravel\MaintenanceMode\DownInformation;
+use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
-class DownInformationTest extends TestCase
+class DownPayloadTest extends TestCase
 {
     /** @test */
     public function it_stores_the_timestamp()
     {
-        $info = new DownInformation(['time' => Carbon::now()->getTimestamp()]);
+        $info = new DownPayload(['time' => Carbon::now()->getTimestamp()]);
         $this->assertEquals(Carbon::now(), $info->getTime());
     }
 
     /** @test */
     public function it_stores_the_message()
     {
-        $info = new DownInformation(['message' => 'A message']);
+        $info = new DownPayload(['message' => 'A message']);
         $this->assertSame('A message', $info->getMessage());
     }
 
     /** @test */
     public function it_stores_the_retry_time()
     {
-        $noRetry = new DownInformation([]);
+        $noRetry = new DownPayload([]);
         $this->assertSame(0, $noRetry->getRetryTime());
 
-        $info = new DownInformation(['retry' => 110]);
+        $info = new DownPayload(['retry' => 110]);
         $this->assertSame(110, $info->getRetryTime());
     }
 
     /** @test */
     public function it_stores_the_allowed_addresses()
     {
-        $info = new DownInformation(['allowed' => ['127.0.0.1']]);
+        $info = new DownPayload(['allowed' => ['127.0.0.1']]);
         $this->assertSame(['127.0.0.1'], $info->getAllowedAddresses());
     }
 
@@ -48,7 +48,7 @@ class DownInformationTest extends TestCase
             'allowed' => ['127.0.0.1'],
         ];
 
-        $info = new DownInformation($payload);
-        $this->assertSame($payload, $info->getPayload());
+        $info = new DownPayload($payload);
+        $this->assertSame($payload, $info->toArray());
     }
 }

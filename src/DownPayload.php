@@ -4,7 +4,7 @@ namespace Konsulting\Laravel\MaintenanceMode;
 
 use Carbon\Carbon;
 
-class DownInformation
+class DownPayload
 {
     /**
      * The message given when the site was taken down.
@@ -34,7 +34,7 @@ class DownInformation
      */
     protected $allowedAddresses;
 
-    public function __construct($payload)
+    public function __construct(array $payload)
     {
         $this->time = array_key_exists('time', $payload)
             ? Carbon::createFromTimestamp($payload['time'])
@@ -42,6 +42,17 @@ class DownInformation
         $this->message = $payload['message'] ?? '';
         $this->secondsToRetry = $payload['retry'] ?? 0;
         $this->allowedAddresses = $payload['allowed'] ?? [];
+    }
+
+    /**
+     * Construct a new payload object from JSON.
+     *
+     * @param string $content
+     * @return DownPayload
+     */
+    public static function fromJson($content)
+    {
+        return new static(json_decode($content, true));
     }
 
     /**
@@ -89,7 +100,7 @@ class DownInformation
      *
      * @return array
      */
-    public function getPayload()
+    public function toArray()
     {
         return [
             'time'    => $this->time->getTimestamp(),
@@ -97,5 +108,15 @@ class DownInformation
             'retry'   => $this->secondsToRetry,
             'allowed' => $this->allowedAddresses,
         ];
+    }
+
+    /**
+     * Get the payload array as JSON.
+     *
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray(), JSON_PRETTY_PRINT);
     }
 }

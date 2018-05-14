@@ -22,11 +22,12 @@ class MaintenanceMode
      *
      * @param string $message
      * @param array  $allowedIpAddresses
+     * @param int    $secondsToRetry
      * @return bool
      */
-    public function on($message = '', $allowedIpAddresses = [])
+    public function on($message = '', $allowedIpAddresses = [], $secondsToRetry = null)
     {
-        $payload = $this->getDownPayload($message, $allowedIpAddresses);
+        $payload = $this->getDownPayload($message, $allowedIpAddresses, $secondsToRetry);
 
         return $this->driver->activate($payload);
     }
@@ -54,11 +55,11 @@ class MaintenanceMode
     /**
      * If maintenance mode is on, get the information provided when it was activated.
      *
-     *
+     * @return DownPayload
      */
     public function getDownInformation()
     {
-
+        return $this->driver->downInformation();
     }
 
     /**
@@ -66,27 +67,16 @@ class MaintenanceMode
      *
      * @param string $message
      * @param array  $allowedIpAddresses
-     * @return array
+     * @param int    $secondsToRetry
+     * @return DownPayload
      */
-    protected function getDownPayload($message = '', $allowedIpAddresses = [])
+    protected function getDownPayload($message = '', $allowedIpAddresses = [], $secondsToRetry = null)
     {
-        return [
+        return new DownPayload([
             'time'    => Carbon::now()->getTimestamp(),
             'message' => $message,
-            'retry'   => static::getRetryTime(),
+            'retry'   => $secondsToRetry,
             'allowed' => $allowedIpAddresses,
-        ];
-    }
-
-    /**
-     * Get the number of seconds the client should wait before retrying their request.
-     *
-     * @return int|null
-     */
-    protected static function getRetryTime()
-    {
-        $retry = config('maintenance_mode.retry_time');
-
-        return is_numeric($retry) && $retry > 0 ? (int) $retry : null;
+        ]);
     }
 }

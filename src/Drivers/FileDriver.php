@@ -2,38 +2,42 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
+use Konsulting\Laravel\MaintenanceMode\DownPayload;
+
 class FileDriver implements DriverInterface
 {
     /**
-     * The path of the maintenance mode indicator file.
+     * Get the down file directory.
      *
-     * @var string
+     * @return string
      */
-    protected $downFileName = 'down';
-
     protected function getDownDirectory()
     {
         return storage_path('maintenance');
     }
 
+    /**
+     * Get the path of the down file.
+     *
+     * @return string
+     */
     protected function getDownFilePath()
     {
-        return $this->getDownDirectory() . DIRECTORY_SEPARATOR . $this->downFileName;
+        return $this->getDownDirectory() . DIRECTORY_SEPARATOR . 'down';
     }
 
     /**
      * Activate maintenance mode.
      *
-     * @param array $payload
+     * @param DownPayload $payload
      * @return bool
      */
-    public function activate($payload)
+    public function activate(DownPayload $payload)
     {
-        if (! file_exists($this->getDownDirectory())) {
-            mkdir($this->getDownDirectory());
-        }
+        $this->ensureDirectoryExists();
+        $result = file_put_contents($this->getDownFilePath(), $payload->toJson());
 
-        return touch($this->getDownFilePath());
+        return is_numeric($result);
     }
 
     /**
@@ -58,5 +62,29 @@ class FileDriver implements DriverInterface
     public function isActive()
     {
         return file_exists($this->getDownFilePath());
+    }
+
+    /**
+     * Get the information specified when the site was taken down.
+     *
+     * @return DownPayload
+     */
+    public function downInformation()
+    {
+        $content = file_get_contents($this->getDownFilePath());
+
+        return DownPayload::fromJson($content);
+    }
+
+    /**
+     * Make sure that the parent directory of the down file exists.
+     *
+     * @return void
+     */
+    protected function ensureDirectoryExists()
+    {
+        if (! file_exists($this->getDownDirectory())) {
+            mkdir($this->getDownDirectory());
+        }
     }
 }
