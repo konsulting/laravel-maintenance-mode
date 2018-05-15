@@ -2,8 +2,6 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Tests\Drivers;
 
-use Illuminate\Support\Carbon;
-use Konsulting\Laravel\MaintenanceMode\DownPayload;
 use Konsulting\Laravel\MaintenanceMode\Drivers\FileDriver;
 use Konsulting\Laravel\MaintenanceMode\Tests\RefreshStorageDirectory;
 
@@ -20,21 +18,6 @@ class FileDriverTest extends DriverTestCase
 
         $this->assertFileExists(storage_path('maintenance/down'));
         $this->assertTrue($this->maintenanceMode->isOn());
-    }
-
-    /** @test */
-    public function it_writes_a_payload_to_the_down_file()
-    {
-        $this->maintenanceMode->on('My message', ['127.0.0.1'], 120);
-
-        $expected = new DownPayload([
-            'time'    => Carbon::now()->getTimestamp(),
-            'message' => 'My message',
-            'retry'   => 120,
-            'allowed' => ['127.0.0.1'],
-        ]);
-
-        $this->assertEquals($expected, $this->maintenanceMode->getDownInformation());
     }
 
     /** @test */
