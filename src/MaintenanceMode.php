@@ -59,7 +59,7 @@ class MaintenanceMode
      */
     public function getDownInformation()
     {
-        return $this->driver->downInformation();
+        return $this->driver->downPayload();
     }
 
     /**

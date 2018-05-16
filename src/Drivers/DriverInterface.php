@@ -39,5 +39,5 @@ interface DriverInterface
      *
      * @return DownPayload
      */
-    public function downInformation();
+    public function downPayload();
 }

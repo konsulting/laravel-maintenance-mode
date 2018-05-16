@@ -69,7 +69,7 @@ class FileDriver implements DriverInterface
      *
      * @return DownPayload
      */
-    public function downInformation()
+    public function downPayload()
     {
         $content = file_get_contents($this->getDownFilePath());
 

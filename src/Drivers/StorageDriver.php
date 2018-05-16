@@ -53,7 +53,7 @@ class StorageDriver implements DriverInterface
      *
      * @return DownPayload
      */
-    public function downInformation()
+    public function downPayload()
     {
         $content = Storage::get($this->downFilePath());
 

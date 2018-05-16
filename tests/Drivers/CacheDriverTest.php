@@ -4,7 +4,6 @@ namespace Konsulting\Laravel\MaintenanceMode\Tests\Drivers;
 
 use Cache;
 use Konsulting\Laravel\MaintenanceMode\Drivers\CacheDriver;
-use Konsulting\Laravel\MaintenanceMode\Tests\TestSupport\CacheTableProvider;
 
 class CacheDriverTest extends DriverTestCase
 {

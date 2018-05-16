@@ -48,7 +48,7 @@ class CacheDriver implements DriverInterface
      *
      * @return DownPayload
      */
-    public function downInformation()
+    public function downPayload()
     {
         $content = Cache::get($this->key());
 
