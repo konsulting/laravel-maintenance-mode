@@ -7,7 +7,7 @@ use Konsulting\Laravel\MaintenanceMode\DownPayload;
 use Konsulting\Laravel\MaintenanceMode\MaintenanceMode;
 use Konsulting\Laravel\MaintenanceMode\Tests\TestCase;
 
-class DriverTestCase extends TestCase
+abstract class DriverTestCase extends TestCase
 {
     /**
      * @var string
@@ -19,11 +19,19 @@ class DriverTestCase extends TestCase
      */
     protected $maintenanceMode;
 
+    /**
+     * The config to pass to the driver.
+     *
+     * @var array
+     */
+    abstract protected function driverConfig();
+
     protected function setUp()
     {
         parent::setUp();
 
-        $this->maintenanceMode = new MaintenanceMode(new $this->driverClass);
+        $driver = new $this->driverClass($this->driverConfig());
+        $this->maintenanceMode = new MaintenanceMode($driver);
     }
 
     /** @test */

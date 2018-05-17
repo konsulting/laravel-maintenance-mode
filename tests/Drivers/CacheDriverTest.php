@@ -9,6 +9,13 @@ class CacheDriverTest extends DriverTestCase
 {
     protected $driverClass = CacheDriver::class;
 
+    protected function driverConfig()
+    {
+        return [
+            'key' => 'maintenance.down'
+        ];
+    }
+
     protected function setUp()
     {
         parent::setUp();

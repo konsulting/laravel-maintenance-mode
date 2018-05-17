@@ -4,16 +4,16 @@ namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
 use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
-class FileDriver implements DriverInterface
+class FileDriver extends BaseDriver implements DriverInterface
 {
     /**
      * Get the down file directory.
      *
      * @return string
      */
-    protected function getDownDirectory()
+    protected function downDirectory()
     {
-        return storage_path('maintenance');
+        return dirname($this->downFilePath());
     }
 
     /**
@@ -21,9 +21,9 @@ class FileDriver implements DriverInterface
      *
      * @return string
      */
-    protected function getDownFilePath()
+    protected function downFilePath()
     {
-        return $this->getDownDirectory() . DIRECTORY_SEPARATOR . 'down';
+        return $this->config['file_path'];
     }
 
     /**
@@ -35,7 +35,7 @@ class FileDriver implements DriverInterface
     public function activate(DownPayload $payload)
     {
         $this->ensureDirectoryExists();
-        $result = file_put_contents($this->getDownFilePath(), $payload->toJson());
+        $result = file_put_contents($this->downFilePath(), $payload->toJson());
 
         return is_numeric($result);
     }
@@ -47,8 +47,8 @@ class FileDriver implements DriverInterface
      */
     public function deactivate()
     {
-        if (file_exists($this->getDownFilePath())) {
-            return unlink($this->getDownFilePath());
+        if (file_exists($this->downFilePath())) {
+            return unlink($this->downFilePath());
         }
 
         return true;
@@ -61,7 +61,7 @@ class FileDriver implements DriverInterface
      */
     public function isActive()
     {
-        return file_exists($this->getDownFilePath());
+        return file_exists($this->downFilePath());
     }
 
     /**
@@ -71,7 +71,7 @@ class FileDriver implements DriverInterface
      */
     public function downPayload()
     {
-        $content = file_get_contents($this->getDownFilePath());
+        $content = file_get_contents($this->downFilePath());
 
         return DownPayload::fromJson($content);
     }
@@ -83,8 +83,8 @@ class FileDriver implements DriverInterface
      */
     protected function ensureDirectoryExists()
     {
-        if (! file_exists($this->getDownDirectory())) {
-            mkdir($this->getDownDirectory());
+        if (! file_exists($this->downDirectory())) {
+            mkdir($this->downDirectory(), 0755, true);
         }
     }
 }

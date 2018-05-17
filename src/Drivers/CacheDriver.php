@@ -5,11 +5,16 @@ namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 use Cache;
 use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
-class CacheDriver implements DriverInterface
+class CacheDriver extends BaseDriver implements DriverInterface
 {
+    /**
+     * The cache key.
+     *
+     * @return string
+     */
     public function key()
     {
-        return 'maintenance.down';
+        return $this->config['key'];
     }
 
     /**

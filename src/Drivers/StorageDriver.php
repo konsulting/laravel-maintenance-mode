@@ -5,7 +5,7 @@ namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 use Illuminate\Support\Facades\Storage;
 use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
-class StorageDriver implements DriverInterface
+class StorageDriver extends BaseDriver implements DriverInterface
 {
     /**
      * Get the path to the down file.
@@ -14,7 +14,7 @@ class StorageDriver implements DriverInterface
      */
     public function downFilePath()
     {
-        return 'maintenance/down';
+        return $this->config['file_path'];
     }
 
     /**

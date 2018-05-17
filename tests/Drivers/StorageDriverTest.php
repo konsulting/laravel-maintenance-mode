@@ -10,6 +10,11 @@ class StorageDriverTest extends DriverTestCase
 {
     protected $driverClass = StorageDriver::class;
 
+    protected function driverConfig()
+    {
+        return ['file_path' => 'maintenance/mode/down'];
+    }
+
     public function getPackageProviders($app)
     {
         return [VfsFilesystemServiceProvider::class];
@@ -25,7 +30,7 @@ class StorageDriverTest extends DriverTestCase
     {
         $this->maintenanceMode->on();
 
-        $this->assertTrue(Storage::exists('maintenance/down'));
+        $this->assertTrue(Storage::exists('maintenance/mode/down'));
         $this->assertTrue($this->maintenanceMode->isOn());
     }
 
@@ -35,13 +40,13 @@ class StorageDriverTest extends DriverTestCase
         $this->makeDownFile();
         $this->maintenanceMode->off();
 
-        $this->assertFalse(Storage::exists('maintenance/down'));
+        $this->assertFalse(Storage::exists('maintenance/mode/down'));
         $this->assertFalse($this->maintenanceMode->isOn());
     }
 
     protected function makeDownFile()
     {
-        Storage::put('maintenance/down', '');
+        Storage::put('maintenance/mode/down', '');
 
         $this->assertTrue($this->maintenanceMode->isOn());
     }
