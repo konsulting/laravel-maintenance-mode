@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: robin
- * Date: 13/05/2018
- * Time: 22:32
- */
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
