@@ -38,7 +38,7 @@ class DownPayload
     {
         $this->time = array_key_exists('time', $payload)
             ? Carbon::createFromTimestamp($payload['time'])
-            : null;
+            : Carbon::now();
         $this->message = $payload['message'] ?? '';
         $this->secondsToRetry = $payload['retry'] ?? 0;
         $this->allowedAddresses = $payload['allowed'] ?? [];

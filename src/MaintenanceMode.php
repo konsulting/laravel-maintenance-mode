@@ -8,6 +8,8 @@ use Konsulting\Laravel\MaintenanceMode\Drivers\DriverInterface as Driver;
 class MaintenanceMode
 {
     /**
+     * The driver responsible for storing the maintenance mode indicator.
+     *
      * @var Driver
      */
     protected $driver;

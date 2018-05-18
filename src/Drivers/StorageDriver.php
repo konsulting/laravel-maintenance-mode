@@ -18,6 +18,29 @@ class StorageDriver extends BaseDriver implements DriverInterface
     }
 
     /**
+     * Get the storage disk to use. Return null if default is selected, as the filesystem manager will fetch the
+     * default driver automatically when it receives null.
+     *
+     * @return string|null
+     */
+    public function storageDisk()
+    {
+        return $this->config['disk'] === 'default'
+            ? null
+            : $this->config['disk'];
+    }
+
+    /**
+     * Get the storage filesystem object.
+     *
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
+    protected function storage()
+    {
+        return Storage::disk($this->storageDisk());
+    }
+
+    /**
      * Activate maintenance mode.
      *
      * @param DownPayload $payload
@@ -25,7 +48,7 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function activate(DownPayload $payload)
     {
-        return Storage::put($this->downFilePath(), $payload->toJson());
+        return $this->storage()->put($this->downFilePath(), $payload->toJson());
     }
 
     /**
@@ -35,7 +58,7 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function deactivate()
     {
-        return Storage::delete($this->downFilePath());
+        return $this->storage()->delete($this->downFilePath());
     }
 
     /**
@@ -45,7 +68,7 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function isActive()
     {
-        return Storage::exists($this->downFilePath());
+        return $this->storage()->exists($this->downFilePath());
     }
 
     /**
@@ -55,7 +78,7 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function downPayload()
     {
-        $content = Storage::get($this->downFilePath());
+        $content = $this->storage()->get($this->downFilePath());
 
         return DownPayload::fromJson($content);
     }

@@ -12,6 +12,8 @@ class DownPayloadTest extends TestCase
     {
         $info = new DownPayload(['time' => Carbon::now()->getTimestamp()]);
         $this->assertEquals(Carbon::now(), $info->getTime());
+
+        $this->assertEquals(Carbon::now(), (new DownPayload([]))->getTime());
     }
 
     /** @test */

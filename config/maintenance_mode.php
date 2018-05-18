@@ -35,6 +35,7 @@ return [
 
     'storage' => [
         'file_path' => 'maintenance/down',
+        'disk'      => 'default',
     ],
 
     'cache' => [
