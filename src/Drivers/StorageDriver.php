@@ -2,11 +2,23 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem\Factory as Storage;
 use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
 class StorageDriver extends BaseDriver implements DriverInterface
 {
+    /**
+     * The storage manager.
+     *
+     * @var Storage
+     */
+    protected $storage;
+
+    public function __construct(Storage $storage)
+    {
+        $this->storage = $storage;
+    }
+
     /**
      * Get the path to the down file.
      *
@@ -31,13 +43,13 @@ class StorageDriver extends BaseDriver implements DriverInterface
     }
 
     /**
-     * Get the storage filesystem object.
+     * Get the storage filesystem object with disk selected.
      *
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
     protected function storage()
     {
-        return Storage::disk($this->storageDisk());
+        return $this->storage->disk($this->storageDisk());
     }
 
     /**

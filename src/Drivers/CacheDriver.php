@@ -2,11 +2,21 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
-use Cache;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Konsulting\Laravel\MaintenanceMode\DownPayload;
 
 class CacheDriver extends BaseDriver implements DriverInterface
 {
+    /**
+     * @var Cache
+     */
+    protected $cache;
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
     /**
      * The cache key.
      *
@@ -25,7 +35,9 @@ class CacheDriver extends BaseDriver implements DriverInterface
      */
     public function activate(DownPayload $payload)
     {
-        return Cache::forever($this->key(), $payload->toArray());
+        $this->cache->forever($this->key(), $payload->toArray());
+
+        return true;
     }
 
     /**
@@ -35,7 +47,7 @@ class CacheDriver extends BaseDriver implements DriverInterface
      */
     public function deactivate()
     {
-        return Cache::forget($this->key());
+        return $this->cache->forget($this->key());
     }
 
     /**
@@ -45,7 +57,7 @@ class CacheDriver extends BaseDriver implements DriverInterface
      */
     public function isActive()
     {
-        return Cache::has($this->key());
+        return $this->cache->has($this->key());
     }
 
     /**
@@ -55,7 +67,7 @@ class CacheDriver extends BaseDriver implements DriverInterface
      */
     public function downPayload()
     {
-        $content = Cache::get($this->key());
+        $content = $this->cache->get($this->key());
 
         return new DownPayload($content);
     }

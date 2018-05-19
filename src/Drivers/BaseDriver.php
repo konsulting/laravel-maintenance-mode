@@ -12,12 +12,15 @@ abstract class BaseDriver
     protected $config;
 
     /**
-     * BaseDriver constructor.
+     * Set the driver config.
      *
      * @param array $config
+     * @return BaseDriver
      */
-    public function __construct(array $config)
+    public function setConfig(array $config)
     {
         $this->config = $config;
+
+        return $this;
     }
 }

@@ -54,10 +54,11 @@ class StorageDriverTest extends DriverTestCase
     /** @test */
     public function it_uses_a_custom_disk()
     {
-        $driver = new $this->driverClass([
-            'file_path' => 'maintenance/mode/down',
-            'disk'      => 'my_disk',
-        ]);
+        $driver = app(StorageDriver::class)
+            ->setConfig([
+                'file_path' => 'maintenance/mode/down',
+                'disk'      => 'my_disk',
+            ]);
         $maintenanceMode = new MaintenanceMode($driver);
 
         $maintenanceMode->on('testing');

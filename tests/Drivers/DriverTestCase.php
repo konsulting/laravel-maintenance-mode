@@ -30,7 +30,8 @@ abstract class DriverTestCase extends TestCase
     {
         parent::setUp();
 
-        $driver = new $this->driverClass($this->driverConfig());
+        $driver = app()->make($this->driverClass)
+            ->setConfig($this->driverConfig());
         $this->maintenanceMode = new MaintenanceMode($driver);
     }
 
