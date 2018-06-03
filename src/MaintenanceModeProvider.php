@@ -3,6 +3,8 @@
 namespace Konsulting\Laravel\MaintenanceMode;
 
 use Illuminate\Support\ServiceProvider;
+use Konsulting\Laravel\MaintenanceMode\Commands\SiteDownCommand;
+use Konsulting\Laravel\MaintenanceMode\Commands\SiteUpCommand;
 use Konsulting\Laravel\MaintenanceMode\Drivers\DriverInterface;
 
 class MaintenanceModeProvider extends ServiceProvider
@@ -17,6 +19,11 @@ class MaintenanceModeProvider extends ServiceProvider
         $this->app->singleton(MaintenanceMode::class, function () {
             return new MaintenanceMode($this->getDriver());
         });
+
+        $this->commands([
+            SiteDownCommand::class,
+            SiteUpCommand::class,
+        ]);
     }
 
     /**
