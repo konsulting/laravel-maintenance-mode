@@ -29,16 +29,25 @@ return [
     |
     */
 
-    'file' => [
-        'file_path' => 'maintenance/down',
+    'driver_config' => [
+
+        'file' => [
+            'file_path' => 'maintenance/down',
+        ],
+
+        'storage' => [
+            'file_path' => 'maintenance/down',
+            'disk'      => 'default',
+        ],
+
+        'cache' => [
+            'key' => 'maintenance.down',
+        ],
     ],
 
-    'storage' => [
-        'file_path' => 'maintenance/down',
-        'disk'      => 'default',
-    ],
-
-    'cache' => [
-        'key' => 'maintenance.down',
+    'aliases' => [
+        'file'    => \Konsulting\Laravel\MaintenanceMode\Drivers\FileDriver::class,
+        'storage' => \Konsulting\Laravel\MaintenanceMode\Drivers\StorageDriver::class,
+        'cache'   => \Konsulting\Laravel\MaintenanceMode\Drivers\CacheDriver::class,
     ],
 ];

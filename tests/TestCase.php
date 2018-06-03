@@ -15,12 +15,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         Carbon::setTestNow('2000-01-01 12:00:00');
     }
 
-
-    public function getPackageProviders($app)
-    {
-        return [MaintenanceModeProvider::class];
-    }
-
     /**
      * Boot the testing helper traits.
      *
