@@ -16,6 +16,10 @@ class MaintenanceModeProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__ . '/../config/maintenance_mode.php' => config_path('maintenance_mode.php'),
+        ]);
+
         $this->app->singleton(MaintenanceMode::class, function () {
             return new MaintenanceMode($this->getDriver());
         });

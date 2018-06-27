@@ -7,6 +7,13 @@ Install via Composer:
 composer require konsulting/laravel-maintenance-mode
 ```
 
+Laravel 5+ will automatically discover the provider and facade.
+
+Publish the config file with:
+```
+php artisan vendor:publish --provider="Konsulting\Laravel\MaintenanceMode\MaintenanceModeProvider"
+```
+
 ## Basic usage
 The usage of maintenance mode is similar to Laravel's `artisan up`/`artisan down` commands. 
 When activated, the a payload containing information about the outage is stored using the chosen driver.
