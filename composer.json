@@ -38,5 +38,5 @@
                 "MaintenanceMode": "Konsulting\\Laravel\\MaintenanceMode\\MaintenanceModeFacade"
             }
         }
-    },
+    }
 }
