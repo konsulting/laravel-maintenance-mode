@@ -32,7 +32,8 @@ return [
     'driver_config' => [
 
         'file' => [
-            'file_path' => 'maintenance/down',
+            'file_path'            => 'maintenance/down',
+            'in_storage_directory' => true,
         ],
 
         'storage' => [

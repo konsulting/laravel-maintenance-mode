@@ -24,7 +24,7 @@ class CacheDriver extends BaseDriver implements DriverInterface
      */
     public function key()
     {
-        return $this->config['key'];
+        return $this->config('key');
     }
 
     /**

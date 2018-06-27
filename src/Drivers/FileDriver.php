@@ -23,7 +23,9 @@ class FileDriver extends BaseDriver implements DriverInterface
      */
     protected function downFilePath()
     {
-        return $this->config['file_path'];
+        return $this->config('in_storage_directory')
+            ? storage_path($this->config('file_path'))
+            : $this->config('file_path');
     }
 
     /**

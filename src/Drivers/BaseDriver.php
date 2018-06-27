@@ -23,4 +23,15 @@ abstract class BaseDriver
 
         return $this;
     }
+
+    /**
+     * Get an item from config.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    protected function config($key)
+    {
+        return array_get($this->config, $key);
+    }
 }

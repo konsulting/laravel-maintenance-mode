@@ -26,7 +26,7 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function downFilePath()
     {
-        return $this->config['file_path'];
+        return $this->config('file_path');
     }
 
     /**
@@ -37,9 +37,9 @@ class StorageDriver extends BaseDriver implements DriverInterface
      */
     public function storageDisk()
     {
-        return $this->config['disk'] === 'default'
+        return $this->config('disk') === 'default'
             ? null
-            : $this->config['disk'];
+            : $this->config('disk');
     }
 
     /**
