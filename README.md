@@ -16,7 +16,7 @@ php artisan vendor:publish --provider="Konsulting\Laravel\MaintenanceMode\Mainte
 ```
 
 ### Middleware
-The file driver is compatible with Laravel's existing maintenance mode middleware when using the default configuration values provided.
+The file driver is compatible with Laravel's existing maintenance mode middleware when using the default configuration values.
 
 To use a different driver or a different file path, add the provided `CheckForMaintenanceMode` middleware to `app/Http/Kernel.php`.
 
