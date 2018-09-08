@@ -1,5 +1,6 @@
 {
     "name": "konsulting/laravel-maintenance-mode",
+    "description": "Programmatically manage maintenance mode in Laravel apps across multiple servers.",
     "type": "library",
     "require-dev": {
         "phpunit/phpunit": "^7.1",
