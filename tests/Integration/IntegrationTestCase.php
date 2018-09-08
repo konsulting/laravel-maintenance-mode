@@ -1,12 +1,12 @@
 <?php
 
-namespace Konsulting\Laravel\MaintenanceMode\Tests\Commands;
+namespace Konsulting\Laravel\MaintenanceMode\Tests\Integration;
 
 use Konsulting\Laravel\MaintenanceMode\MaintenanceMode;
 use Konsulting\Laravel\MaintenanceMode\MaintenanceModeProvider;
 use Konsulting\Laravel\MaintenanceMode\Tests\TestCase;
 
-class CommandTestCase extends TestCase
+class IntegrationTestCase extends TestCase
 {
     /** @var MaintenanceMode */
     protected $maintenanceMode;

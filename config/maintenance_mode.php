@@ -20,6 +20,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Override Illuminate commands
+    |--------------------------------------------------------------------------
+    |
+    | If enabled, the default Laravel `artisan up` and `artisan down` commands
+    | will be overridden and aliased to the `artisan site:up` and `artisan
+    | site:down` commands from this package.
+    |
+    */
+
+    'override_illuminate_commands' => true,
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Driver configuration
     |--------------------------------------------------------------------------
     |

@@ -2,6 +2,7 @@
 
 namespace Konsulting\Laravel\MaintenanceMode;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Konsulting\Laravel\MaintenanceMode\Commands\SiteDownCommand;
 use Konsulting\Laravel\MaintenanceMode\Commands\SiteUpCommand;
@@ -24,10 +25,9 @@ class MaintenanceModeProvider extends ServiceProvider
             return new MaintenanceMode($this->getDriver());
         });
 
-        $this->commands([
-            SiteDownCommand::class,
-            SiteUpCommand::class,
-        ]);
+        if (config('maintenance_mode.override_illuminate_commands')) {
+            $this->overrideIlluminateCommands();
+        }
     }
 
     /**
@@ -38,6 +38,8 @@ class MaintenanceModeProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/maintenance_mode.php', 'maintenance_mode');
+
+        $this->registerCommands();
     }
 
     /**
@@ -52,5 +54,34 @@ class MaintenanceModeProvider extends ServiceProvider
         $config = config('maintenance_mode.driver_config')[$driverKey];
 
         return $this->app->make($driverClass)->setConfig($config);
+    }
+
+    /**
+     * Override the default artisan up/down commands in the container.
+     *
+     * @return void
+     */
+    protected function overrideIlluminateCommands()
+    {
+        $this->app->extend('command.up', function ($upCommand, Application $app) {
+            return $app->make(SiteUpCommand::class);
+        });
+
+        $this->app->extend('command.down', function ($downCommand, Application $app) {
+            return $app->make(SiteDownCommand::class);
+        });
+    }
+
+    /**
+     * Register the site:up and site:down commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        $this->commands([
+            SiteDownCommand::class,
+            SiteUpCommand::class,
+        ]);
     }
 }
