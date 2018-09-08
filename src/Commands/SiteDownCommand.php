@@ -11,14 +11,11 @@ class SiteDownCommand extends Command
     use InteractsWithTime;
 
     /**
-     * The console command signature.
+     * The console command signature. Set in the constructor.
      *
      * @var string
      */
-    protected $signature = 'site:down 
-                                {--message= : The message for the maintenance mode. }
-                                {--retry= : The number of seconds after which the request may be retried.}
-                                {--allow=* : IP or networks allowed to access the application while in maintenance mode.}';
+    protected $signature;
 
     /**
      * The console command description.
@@ -36,9 +33,25 @@ class SiteDownCommand extends Command
 
     public function __construct(MaintenanceMode $maintenanceMode)
     {
-        parent::__construct();
-
         $this->maintenanceMode = $maintenanceMode;
+        $this->signature = $this->getSignature();
+
+        parent::__construct();
+    }
+
+    /**
+     * Get the command signature.
+     *
+     * @return string
+     */
+    protected function getSignature()
+    {
+        $name = config('maintenance_mode.override_illuminate_commands') ? 'down' : 'site:down';
+
+        return $name . '
+                    {--message= : The message for the maintenance mode. }
+                    {--retry= : The number of seconds after which the request may be retried.}
+                    {--allow=* : IP or networks allowed to access the application while in maintenance mode.}';
     }
 
     /**

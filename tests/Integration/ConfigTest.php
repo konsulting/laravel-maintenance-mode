@@ -19,5 +19,11 @@ class ConfigTest extends IntegrationTestCase
     {
         $this->assertInstanceOf(UpCommand::class, $this->app->make('command.up'));
         $this->assertInstanceOf(DownCommand::class, $this->app->make('command.down'));
+
+        $this->artisan('site:down');
+        $this->assertTrue($this->maintenanceMode->isOn());
+
+        $this->artisan('site:up');
+        $this->assertFalse($this->maintenanceMode->isOn());
     }
 }

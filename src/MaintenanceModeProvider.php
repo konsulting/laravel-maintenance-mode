@@ -27,6 +27,8 @@ class MaintenanceModeProvider extends ServiceProvider
 
         if (config('maintenance_mode.override_illuminate_commands')) {
             $this->overrideIlluminateCommands();
+        } else {
+            $this->registerCommands();
         }
     }
 
@@ -38,8 +40,6 @@ class MaintenanceModeProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/maintenance_mode.php', 'maintenance_mode');
-
-        $this->registerCommands();
     }
 
     /**

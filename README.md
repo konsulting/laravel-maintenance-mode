@@ -35,25 +35,22 @@ class Kernel extends HttpKernel
 ```
 
 ## Basic usage
-To **activate** maintenance mode:
-```
-php artisan site:down
-```
+By default, the Laravel `artisan up` and `artisan down` commands are overridden and so may be used to activate and
+deactivate maintenance mode using the selected driver.
+If `override_illuminate_commands` is set to `false` in the config, the commands for maintenance mode are `site:up` and
+`site:down`.
 
-To **deactivate** maintenance mode:
-```
-php artisan site:up
-```
-
-The behaviour of maintenance mode is similar to Laravel's `artisan up`/`artisan down` commands. 
+The behaviour of maintenance mode is similar to Laravel's default `artisan up`/`artisan down` commands.
 When activated, the a payload containing information about the outage is stored using the chosen driver.
-This is picked up by the middleware, which throws `Illuminate\Foundation\Http\Exceptions\MaintenanceModeException` if maintenance mode is active.
-Laravel's exception handler deals with returning the correct response.
+This is picked up by the middleware, which throws `Illuminate\Foundation\Http\Exceptions\MaintenanceModeException` if
+maintenance mode is active. Laravel's exception handler deals with returning the correct response.
 
 ### Drivers
 By default there are three drivers included: file, cache and storage.
-The file driver is very similar to Laravel's built in maintenance mode in that it stores a payload file in the local filesystem.
-The cache and storage drivers are useful for when multiple webservers are serving the application, as they can be easily configured to store the payload at an external location.
+The file driver is very similar to Laravel's built in maintenance mode in that it stores a payload file in the local
+filesystem.
+The cache and storage drivers are useful for when multiple webservers are serving the application, as they can be easily
+configured to store the payload at an external location such as a cache server.
 
 See the configuration file for more information about the drivers.
 

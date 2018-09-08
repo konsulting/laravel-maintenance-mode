@@ -10,7 +10,7 @@ class CommandsTest extends IntegrationTestCase
     /** @test */
     public function it_activates_maintenance_mode()
     {
-        $this->artisan('site:down', [
+        $this->artisan('down', [
             '--message' => 'Test',
             '--retry'   => 123,
             '--allow'   => ['1.1.1.1', '2.2.2.2'],
@@ -29,7 +29,7 @@ class CommandsTest extends IntegrationTestCase
         $this->maintenanceMode->on();
         $this->assertTrue($this->maintenanceMode->isOn());
 
-        $this->artisan('site:up');
+        $this->artisan('up');
         $this->assertFalse($this->maintenanceMode->isOn());
     }
 
@@ -38,5 +38,11 @@ class CommandsTest extends IntegrationTestCase
     {
         $this->assertInstanceOf(SiteUpCommand::class, $this->app->make('command.up'));
         $this->assertInstanceOf(SiteDownCommand::class, $this->app->make('command.down'));
+
+        $this->artisan('down');
+        $this->assertTrue($this->maintenanceMode->isOn());
+
+        $this->artisan('up');
+        $this->assertFalse($this->maintenanceMode->isOn());
     }
 }

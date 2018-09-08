@@ -8,11 +8,11 @@ use Konsulting\Laravel\MaintenanceMode\MaintenanceMode;
 class SiteUpCommand extends Command
 {
     /**
-     * The console command name.
+     * The console command name. Set in the constructor.
      *
      * @var string
      */
-    protected $name = 'site:up';
+    protected $name;
 
     /**
      * The console command description.
@@ -30,9 +30,10 @@ class SiteUpCommand extends Command
 
     public function __construct(MaintenanceMode $maintenanceMode)
     {
-        parent::__construct();
-
         $this->maintenanceMode = $maintenanceMode;
+        $this->name = config('maintenance_mode.override_illuminate_commands') ? 'up' : 'site:up';
+
+        parent::__construct();
     }
 
     /**
