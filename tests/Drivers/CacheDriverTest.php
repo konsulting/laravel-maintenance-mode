@@ -16,11 +16,6 @@ class CacheDriverTest extends DriverTestCase
         ];
     }
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /** @test */
     public function it_takes_the_site_down()
     {

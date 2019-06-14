@@ -2,8 +2,8 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Tests\Drivers;
 
-use Konsulting\Laravel\MaintenanceMode\Drivers\FileDriver;
 use Konsulting\Laravel\MaintenanceMode\MaintenanceMode;
+use Konsulting\Laravel\MaintenanceMode\Drivers\FileDriver;
 use Konsulting\Laravel\MaintenanceMode\Tests\RefreshStorageDirectory;
 
 class FileDriverTest extends DriverTestCase
@@ -42,7 +42,7 @@ class FileDriverTest extends DriverTestCase
     public function the_file_path_can_be_relative_to_the_storage_directory()
     {
         $driver = (new FileDriver)->setConfig([
-            'file_path'                     => 'maintenance/mode/down',
+            'file_path'            => 'maintenance/mode/down',
             'in_storage_directory' => true,
         ]);
         $maintenanceMode = new MaintenanceMode($driver);
