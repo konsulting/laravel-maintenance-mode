@@ -8,7 +8,7 @@ use Konsulting\Laravel\MaintenanceMode\MaintenanceModeProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

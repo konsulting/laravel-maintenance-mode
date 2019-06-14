@@ -26,7 +26,7 @@ abstract class DriverTestCase extends TestCase
      */
     abstract protected function driverConfig();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

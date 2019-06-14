@@ -18,7 +18,7 @@ class CheckForMaintenanceModeTest extends TestCase
     /** @var MaintenanceMode */
     protected $maintenanceMode;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
