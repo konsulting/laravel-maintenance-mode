@@ -3,10 +3,10 @@
     "description": "Programmatically manage maintenance mode in Laravel apps across multiple servers.",
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "^7.1",
-        "orchestra/testbench": "^3.6",
+        "phpunit/phpunit": "^8.1",
+        "orchestra/testbench": "^3.8",
         "stechstudio/laravel-vfs-adapter": "^2.1",
-        "mockery/mockery": "^1.1"
+        "mockery/mockery": "^1.2"
     },
     "license": "MIT",
     "authors": [
