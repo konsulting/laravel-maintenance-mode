@@ -4,8 +4,8 @@
     "type": "library",
     "require-dev": {
         "phpunit/phpunit": "^8.1",
-        "orchestra/testbench": "^3.8",
-        "stechstudio/laravel-vfs-adapter": "^2.1",
+        "orchestra/testbench": "^4.0",
+        "stechstudio/laravel-vfs-adapter": "^3.0",
         "mockery/mockery": "^1.2"
     },
     "license": "MIT",
