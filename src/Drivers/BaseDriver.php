@@ -2,6 +2,8 @@
 
 namespace Konsulting\Laravel\MaintenanceMode\Drivers;
 
+use Illuminate\Support\Arr;
+
 abstract class BaseDriver
 {
     /**
@@ -32,6 +34,6 @@ abstract class BaseDriver
      */
     protected function config($key)
     {
-        return array_get($this->config, $key);
+        return Arr::get($this->config, $key);
     }
 }
